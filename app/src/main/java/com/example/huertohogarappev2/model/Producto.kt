@@ -1,4 +1,15 @@
 package com.example.huertohogarappev2.model
 
-class Producto {
-}
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "Producto")
+data class Producto(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val nombre: String,
+    val categoria: String,
+    val precio: Int,
+    val imagen: String?,
+    val activo: Boolean
+)
