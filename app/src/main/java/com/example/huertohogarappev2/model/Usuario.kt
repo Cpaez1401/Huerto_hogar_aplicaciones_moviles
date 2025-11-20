@@ -1,4 +1,4 @@
-package com.example.pokestore.model
+package com.example.huertohogarappev2.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
