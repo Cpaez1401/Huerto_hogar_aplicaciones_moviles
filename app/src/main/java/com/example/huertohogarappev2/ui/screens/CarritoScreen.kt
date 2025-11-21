@@ -14,10 +14,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.huertohogarappev2.ui.components.BotonPrincipal
 
+
 @OptIn(ExperimentalMaterial3Api::class)
+@Preview
 @Composable
 fun CarritoScreen(
     onConfirmarPedido: () -> Unit,
