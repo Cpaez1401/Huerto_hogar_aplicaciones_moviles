@@ -1,52 +1,54 @@
 package com.example.huertohogarappev2.ui.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.huertohogarappev2.ui.components.BotonPrincipal
-import com.example.huertohogarappev2.ui.components.CampoTexto
-import com.example.huertohogarappev2.ui.components.TituloText
+import androidx.compose.ui.unit.sp
 
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun RegistroScreen(
-    onRegistroExitoso: () -> Unit
-) {
-    var nombre by remember { mutableStateOf("") }
-    var correo by remember { mutableStateOf("") }
-    var contrasena by remember { mutableStateOf("") }
-    var direccion by remember { mutableStateOf("") }
-    var telefono by remember { mutableStateOf("") }
-
-    Column(
-        modifier = Modifier.fillMaxSize().padding(24.dp),
-        verticalArrangement = Arrangement.Center
+fun RegistroScreen() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFE3F2FD)),
+        contentAlignment = Alignment.Center
     ) {
-        TituloText("Crear Cuenta")
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(24.dp)
+        ) {
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "Registro",
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF1E88E5)
+            )
 
-        CampoTexto("Nombre", nombre, { nombre = it })
-        CampoTexto("Correo", correo, { correo = it })
-        CampoTexto("Contraseña", contrasena, { contrasena = it })
-        CampoTexto("Dirección", direccion, { direccion = it })
-        CampoTexto("Teléfono", telefono, { telefono = it })
+            Spacer(modifier = Modifier.height(16.dp))
 
-        Spacer(modifier = Modifier.height(24.dp))
-
-        BotonPrincipal("Registrarse", onClick = {
-            // Aquí irá el registro con ViewModel
-            onRegistroExitoso()
-        }, modifier = Modifier.fillMaxWidth())
+            Text(
+                text = "Pantalla de registro lista para personalizar",
+                color = Color.DarkGray
+            )
+        }
     }
 }
+

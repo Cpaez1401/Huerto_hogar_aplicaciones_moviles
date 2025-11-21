@@ -1,6 +1,8 @@
 package com.example.huertohogarappev2.ui.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,51 +10,46 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.huertohogarappev2.ui.components.BotonPrincipal
-import com.example.huertohogarappev2.ui.components.CampoTexto
-import com.example.huertohogarappev2.ui.components.TituloText
+import androidx.compose.ui.unit.sp
 
+@Preview(showBackground = true, showSystemUi = true, name = "login",
+    device = "spec:width=411dp,height=891dp"
+)
 @Composable
-fun LoginScreen(
-    onLoginSuccess: () -> Unit,
-    onNavigateToRegister: () -> Unit
-) {
-    var correo by remember { mutableStateOf("") }
-    var contrasena by remember { mutableStateOf("") }
-
-    Column(
-        modifier = Modifier.fillMaxSize().padding(24.dp),
-        verticalArrangement = Arrangement.Center
+fun LoginScreen() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFE8F5E9)),
+        contentAlignment = Alignment.Center
     ) {
-        TituloText("Iniciar Sesión")
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(24.dp)
+        ) {
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "Iniciar Sesión",
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF2E7D32)
+            )
 
-        CampoTexto("Correo", correo, { correo = it })
+            Spacer(modifier = Modifier.height(16.dp))
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        CampoTexto("Contraseña", contrasena, { contrasena = it })
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        BotonPrincipal("Ingresar", onClick = {
-            // Aquí irá la conexión con el LoginViewModel
-            onLoginSuccess()
-        }, modifier = Modifier.fillMaxWidth())
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        TextButton(onClick = onNavigateToRegister) {
-            Text("¿No tienes cuenta? Regístrate")
+            Text(
+                text = "Pantalla de login lista para personalizar",
+                color = Color.DarkGray
+            )
         }
     }
 }
