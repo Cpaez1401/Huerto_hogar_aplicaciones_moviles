@@ -8,5 +8,8 @@ data class Pedido(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val usuarioId: Int,
-    val fecha: String
+    val fecha: String,
+    val estado: String,
+    val total: Int,
+    val direccionEntrega: String
 )
