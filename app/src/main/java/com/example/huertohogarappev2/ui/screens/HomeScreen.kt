@@ -1,5 +1,6 @@
 package com.example.huertohogarappev2.ui.screen
 
+import android.R.attr.fontWeight
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.huertohogarappev2.ui.components.CarruselSimple
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
@@ -24,7 +26,7 @@ fun HomeScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFFFDE7)),
+            .background(Color(0xFF1CA350)),
         contentAlignment = Alignment.TopCenter
     ) {
         Column(
@@ -35,18 +37,15 @@ fun HomeScreen() {
         ) {
 
             Text(
-                text = "Inicio",
-                fontSize = 30.sp,
+                text = "Huerto Hogar",
+                fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFFF9A825)
+                color = Color(0xFFFDFFFF)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text(
-                text = "Aquí mostrarás productos, banners, categorías, etc.",
-                color = Color.DarkGray
-            )
+            CarruselSimple()
         }
     }
 }
