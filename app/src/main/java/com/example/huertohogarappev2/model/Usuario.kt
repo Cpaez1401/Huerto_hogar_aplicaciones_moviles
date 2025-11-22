@@ -9,5 +9,8 @@ data class Usuario(
     val id: Int = 0,
     val nombre: String,
     val correo: String,
-    val contrasena: String
+    val contrasena: String,
+    val direccion: String,
+    val telefono: String,
+    val activo: Boolean
 )

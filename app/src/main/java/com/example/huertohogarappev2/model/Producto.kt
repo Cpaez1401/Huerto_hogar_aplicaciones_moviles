@@ -8,8 +8,11 @@ data class Producto(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val nombre: String,
-    val categoria: String,
     val precio: Int,
+    val descripcion: String,
     val imagen: String?,
+    val stock: Int,
+    val categoria: String,
+    val unidad: String,
     val activo: Boolean
 )
