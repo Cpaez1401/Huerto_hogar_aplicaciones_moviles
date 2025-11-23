@@ -26,7 +26,7 @@ fun HomeScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF1CA350)),
+            .background(Color(0xFFFFFFFF)),
         contentAlignment = Alignment.TopCenter
     ) {
         Column(
@@ -40,7 +40,7 @@ fun HomeScreen() {
                 text = "Huerto Hogar",
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFFFDFFFF)
+                color = Color(0xFF2F5D08)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
