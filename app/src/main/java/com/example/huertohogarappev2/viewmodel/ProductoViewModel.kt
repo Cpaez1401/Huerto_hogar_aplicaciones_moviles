@@ -13,13 +13,13 @@ class ProductoViewModel : ViewModel() {
         cargarProductos()
     }
 
-    private fun cargarProductos() {
+    fun cargarProductos() {
         val productos = listOf(
             Producto(
                 nombre = "Manzanas Fuji",
                 descripcion = "Manzanas crujientes y dulces del Valle del Maule",
                 precio = 1200,
-                imagen = "...",
+                imagen = "fuji_red.jpg",
                 stock = 150,
                 categoria = "Frutas Frescas",
                 unidad = "kilo",
@@ -29,7 +29,7 @@ class ProductoViewModel : ViewModel() {
                 nombre = "Naranjas Valencia",
                 descripcion = "Naranjas jugosas ricas en vitamina C",
                 precio = 1000,
-                imagen = "...",
+                imagen = "naranjas_valencia.webp",
                 stock = 200,
                 categoria = "Frutas Frescas",
                 unidad = "kilo",
@@ -39,7 +39,7 @@ class ProductoViewModel : ViewModel() {
                 nombre = "Zanahorias Orgánicas",
                 descripcion = "Zanahorias cultivadas sin pesticidas en O'Higgins",
                 precio = 900,
-                imagen = "...",
+                imagen = "zanahorias_organicas.jpg",
                 stock = 100,
                 categoria = "Verduras Orgánicas",
                 unidad = "kilo",
@@ -49,7 +49,7 @@ class ProductoViewModel : ViewModel() {
                 nombre = "Miel Orgánica",
                 descripcion = "Miel pura de apicultores locales",
                 precio = 5000,
-                imagen = "....",
+                imagen = "miel.jpg",
                 stock = 50,
                 categoria = "Productos Orgánicos",
                 unidad = "frasco",
@@ -59,7 +59,7 @@ class ProductoViewModel : ViewModel() {
                 nombre = "Espinacas Frescas",
                 descripcion = "Espinacas frescas y nutritivas",
                 precio = 700,
-                imagen = "...",
+                imagen = "espinacas_organicas.jpg",
                 stock = 80,
                 categoria = "Verduras Orgánicas",
                 unidad = "bolsa",
