@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -14,6 +15,7 @@ fun TituloText(texto: String) {
         text = texto,
         fontSize = 28.sp,
         fontWeight = FontWeight.Bold,
-        modifier = Modifier.padding(bottom = 20.dp)
+        modifier = Modifier.padding(bottom = 20.dp),
+        color = Color(0xFF2F5D08)
     )
 }

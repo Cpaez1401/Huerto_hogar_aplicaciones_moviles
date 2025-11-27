@@ -1,5 +1,7 @@
 package com.example.huertohogarappev2.ui.screens
 
+import android.R.attr.fontWeight
+import android.R.attr.text
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -29,6 +31,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.huertohogarappev2.R
 import com.example.huertohogarappev2.model.Producto
+import com.example.huertohogarappev2.ui.components.TituloText
 import com.example.huertohogarappev2.viewmodel.ProductoViewModel
 
 @Composable
@@ -45,12 +48,10 @@ fun HomeScreen(navController: NavController) {
             .padding(24.dp)
             .fillMaxSize()
     ) {
-        Text(
-            text = "Bienvenido a Huerto Hogar",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF2F5D08) // Verde de HuertoHogar
+        TituloText(
+            texto = "Bienvenido a Huerto Hogar"
         )
+
 
         Spacer(modifier = Modifier.height(8.dp))
 
