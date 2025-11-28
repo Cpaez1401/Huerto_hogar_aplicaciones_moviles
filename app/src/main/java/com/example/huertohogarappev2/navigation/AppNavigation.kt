@@ -6,7 +6,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.huertohogarappev2.ui.screen.LoginScreen
 import com.example.huertohogarappev2.ui.screen.RegistroScreen
 import com.example.huertohogarappev2.ui.screens.HomeScreen
+import com.example.huertohogarappev2.ui.screens.ProductosScreen
 import com.example.huertohogarappev2.viewmodel.LoginViewModel
+import com.example.huertohogarappev2.viewmodel.ProductoViewModel
 
 @Composable
 fun AppNavigation(){
@@ -38,6 +40,12 @@ fun AppNavigation(){
         composable("home"){
             HomeScreen(navController)
         }
+
+        composable("productos") {
+            val vm: ProductoViewModel = viewModel()
+            ProductosScreen(navController, vm)
+        }
+
 
     }
 
