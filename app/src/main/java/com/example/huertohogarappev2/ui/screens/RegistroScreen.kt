@@ -31,7 +31,7 @@ import com.example.huertohogarappev2.ui.components.BotonPrincipal
 import com.example.huertohogarappev2.ui.components.CampoTexto
 import com.example.huertohogarappev2.ui.components.TituloText
 
-@Preview(showBackground = true, showSystemUi = true)
+/*@Preview(showBackground = true, showSystemUi = true)*/
 @Composable
 fun RegistroScreen(
     onRegistrar: () -> Unit = {},
