@@ -1,5 +1,7 @@
 package com.example.huertohogarappev2.ui.screens
 
+import android.R.attr.fontWeight
+import android.R.attr.text
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -12,8 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,10 +29,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.huertohogarappev2.R
 import com.example.huertohogarappev2.model.Producto
-import com.example.huertohogarappev2.ui.theme.HuertoHogarAppEv2Theme
+import com.example.huertohogarappev2.ui.components.TituloText
 import com.example.huertohogarappev2.viewmodel.ProductoViewModel
 
 @Composable
@@ -49,12 +48,10 @@ fun HomeScreen(navController: NavController) {
             .padding(24.dp)
             .fillMaxSize()
     ) {
-        Text(
-            text = "Bienvenido a Huerto Hogar",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF2F5D08) // Verde de HuertoHogar
+        TituloText(
+            texto = "Bienvenido a Huerto Hogar"
         )
+
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -255,4 +252,5 @@ fun ProductoItemPreviewContent(producto: Producto) {
         }
     }
 }
+
 
