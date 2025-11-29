@@ -3,12 +3,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.huertohogarappev2.ui.screen.CarritoScreen
 import com.example.huertohogarappev2.ui.screen.LoginScreen
 import com.example.huertohogarappev2.ui.screen.RegistroScreen
 import com.example.huertohogarappev2.ui.screens.HomeScreen
 import com.example.huertohogarappev2.ui.screens.ProductosScreen
+import com.example.huertohogarappev2.viewmodel.CarritoViewModel
 import com.example.huertohogarappev2.viewmodel.LoginViewModel
 import com.example.huertohogarappev2.viewmodel.ProductoViewModel
+import com.example.huertohogarappev2.viewmodel.RegistroViewModel
 
 @Composable
 fun AppNavigation(){
@@ -31,9 +34,13 @@ fun AppNavigation(){
         }
 
         composable("registro"){
+
+            val viewModel: RegistroViewModel = viewModel()
+
             RegistroScreen (
-            onRegistrar = { navController.navigate("home") },
-            onIrLogin = { navController.navigate("login") }
+                viewModel = viewModel,
+                onRegistrar = { navController.navigate("home") },
+                onIrLogin = { navController.navigate("login") }
             )
         }
 
@@ -45,6 +52,12 @@ fun AppNavigation(){
             val vm: ProductoViewModel = viewModel()
             ProductosScreen(navController, vm)
         }
+
+        composable("carrito"){
+            val carritoVm: CarritoViewModel = viewModel()
+            CarritoScreen(navController = navController, carritoViewModel = carritoVm)
+        }
+
 
 
     }

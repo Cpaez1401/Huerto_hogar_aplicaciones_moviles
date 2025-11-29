@@ -31,13 +31,18 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.huertohogarappev2.R
 import com.example.huertohogarappev2.model.Producto
+import com.example.huertohogarappev2.ui.components.BotonPrincipal
 import com.example.huertohogarappev2.ui.components.TituloText
+import com.example.huertohogarappev2.viewmodel.CarritoViewModel
 import com.example.huertohogarappev2.viewmodel.ProductoViewModel
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, carritoViewModel: CarritoViewModel = viewModel()) {
+
     val viewModel: ProductoViewModel = viewModel()
     val productos by viewModel.productos.collectAsState()
+    val carritoVm: CarritoViewModel = viewModel()
+
 
     LaunchedEffect(Unit) {
         viewModel.cargarProductos()
@@ -72,6 +77,20 @@ fun HomeScreen(navController: NavController) {
         LazyColumn {
             items(productos) { producto ->
                 ProductoItem(producto = producto, navController = navController)
+            }
+        }
+
+        LazyColumn {
+            items(productos) { producto ->
+                BotonPrincipal(
+                    texto = "Agregar ${producto.nombre}",
+                    color = Color(0xFF4CAF50),
+                    onClick = {
+
+                        carritoViewModel.agregarProducto(producto)
+                    }
+                )
+                Spacer(modifier = Modifier.height(10.dp))
             }
         }
     }
