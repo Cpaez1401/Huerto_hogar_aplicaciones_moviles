@@ -20,14 +20,18 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.huertohogarappev2.R
+import com.example.huertohogarappev2.ui.components.BotonPrincipal
+import com.example.huertohogarappev2.ui.components.CardProducto
 import com.example.huertohogarappev2.ui.components.TituloText
 import com.example.huertohogarappev2.viewmodel.ProductoViewModel
+import com.example.huertohogarappev2.viewmodel.CarritoViewModel
 
 
 @Composable
 fun ProductosScreen(
     navController: NavController,
-    viewModel: ProductoViewModel = viewModel()
+    viewModel: ProductoViewModel = viewModel(),
+    carritoViewModel: CarritoViewModel = viewModel()
 ) {
 
     val productos = viewModel.productos.collectAsState().value
@@ -64,14 +68,21 @@ fun ProductosScreen(
 
         LazyColumn {
             items(productos) { producto ->
-                ProductoItem(
+
+                CardProducto(
                     producto = producto,
-                    navController = navController
+                    onAgregar = { carritoViewModel.agregarProducto(producto) }
                 )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+
             }
         }
+
     }
 }
+
 
 
 @Preview(
@@ -82,17 +93,16 @@ fun ProductosScreen(
 @Composable
 fun ProductosScreenPreview() {
 
-    // 1. NavController de prueba
+
     val navController = rememberNavController()
 
-    // 2. ViewModel para la preview
+
     val viewModel: ProductoViewModel = viewModel()
 
-
-    // 3. Llamamos a la pantalla real
     ProductosScreen(
         navController = navController,
-        viewModel = viewModel
+        viewModel = viewModel,
+        carritoViewModel = viewModel()
     )
 }
 

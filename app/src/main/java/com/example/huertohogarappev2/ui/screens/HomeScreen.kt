@@ -1,5 +1,7 @@
 package com.example.huertohogarappev2.ui.screens
 
+import android.R.attr.fontWeight
+import android.R.attr.text
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -33,7 +35,7 @@ import com.example.huertohogarappev2.ui.components.TituloText
 import com.example.huertohogarappev2.viewmodel.ProductoViewModel
 
 @Composable
-fun HomeScreen(navController: NavController, productoViewModel: ProductoViewModel) {
+fun HomeScreen(navController: NavController) {
     val viewModel: ProductoViewModel = viewModel()
     val productos by viewModel.productos.collectAsState()
 
