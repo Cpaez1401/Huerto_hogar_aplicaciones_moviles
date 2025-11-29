@@ -2,7 +2,6 @@ package com.example.huertohogarappev2.ui.screen
 
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +22,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.huertohogarappev2.R
@@ -35,7 +33,8 @@ import com.example.huertohogarappev2.ui.components.TituloText
 @Composable
 fun RegistroScreen(
     onRegistrar: () -> Unit = {},
-    onIrLogin: () -> Unit = {}
+    onIrLogin: () -> Unit = {},
+    viewModel: Any
 ) {
     var nombre by remember { mutableStateOf("") }
     var correo by remember { mutableStateOf("") }

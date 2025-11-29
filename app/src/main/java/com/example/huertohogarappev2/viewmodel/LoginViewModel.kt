@@ -4,8 +4,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.huertohogarappev2.data.UsuarioDao
+import kotlinx.coroutines.launch
 
-class LoginViewModel : ViewModel() {
+
+class LoginViewModel(private val usuarioDao: UsuarioDao) : ViewModel() {
 
     var correo by mutableStateOf("")
         private set
@@ -28,12 +32,18 @@ class LoginViewModel : ViewModel() {
     }
 
     fun validarLogin() {
-        if (correo == "test@huertohogar.com" && contrasena == "admin") {
-            loginExitoso = true
-            error = ""
-        } else {
-            loginExitoso = false
-            error = "Datos incorrectos"
+        viewModelScope.launch {
+            val usuario = usuarioDao.obtenerPorCorreo(correo)
+            if (usuario != null && usuario.contrasena == contrasena) {
+                loginExitoso = true
+                error = ""
+            } else {
+                loginExitoso = false
+                error = "Datos incorrectos"
+            }
         }
     }
 }
+
+
+
