@@ -30,13 +30,15 @@ import com.example.huertohogarappev2.R
 import com.example.huertohogarappev2.ui.components.BotonPrincipal
 import com.example.huertohogarappev2.ui.components.CampoTexto
 import com.example.huertohogarappev2.ui.components.TituloText
+import com.example.huertohogarappev2.viewmodel.LoginViewModel
 
-@Preview(
+/*@Preview(
     showBackground = true, showSystemUi = true, name = "login",
     device = "spec:width=411dp,height=891dp"
-)
+)*/
 @Composable
 fun LoginScreen(
+    viewModel: LoginViewModel,
     onLogin: () -> Unit = {},
     onGoToRegister: () -> Unit = {}
 ) {
@@ -86,14 +88,14 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             CampoTexto(
-                valor = correo,
-                onValueChange = { correo = it },
+                valor = viewModel.correo,
+                onValueChange = { viewModel.actualizarCorreo(it) },
                 label = "Correo"
             )
 
             CampoTexto(
-                valor = contrasena,
-                onValueChange = { contrasena = it },
+                valor = viewModel.contrasena,
+                onValueChange = { viewModel.actualizarContrasena(it) },
                 label = "Contraseña",
                 isPassword = true
             )
@@ -103,13 +105,25 @@ fun LoginScreen(
             BotonPrincipal(
                 texto = "Ingresar",
                 color = Color(0xFF2F5D08),
-                onClick = { onLogin() }
+                onClick = {
+                    viewModel.validarLogin()
+                    if (viewModel.loginExitoso) {
+                        onLogin()
+                    } else {
+                        print("Datos incorrectos")
+                    }
+                }
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
+            if (viewModel.error.isNotBlank()) {
+                Spacer(Modifier.height(8.dp))
+                Text(text = viewModel.error, color = Color.Red)
 
-            TextButton(onClick = onGoToRegister) {
-                Text("Crear cuenta")
+                Spacer(modifier = Modifier.height(12.dp))
+
+                TextButton(onClick = onGoToRegister) {
+                    Text("Crear cuenta")
+                }
             }
         }
     }
