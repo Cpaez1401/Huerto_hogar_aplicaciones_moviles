@@ -16,6 +16,9 @@ class LoginViewModel : ViewModel() {
     var loginExitoso by mutableStateOf(false)
         private set
 
+    var error by mutableStateOf("")
+        private set
+
     fun actualizarCorreo(nuevo: String) {
         correo = nuevo
     }
@@ -25,7 +28,12 @@ class LoginViewModel : ViewModel() {
     }
 
     fun validarLogin() {
-        // Ejemplo simple, igual al estilo PokeStore
-        loginExitoso = correo == "test@huerto.cl" && contrasena == "1234"
+        if (correo == "test@huertohogar.com" && contrasena == "admin") {
+            loginExitoso = true
+            error = ""
+        } else {
+            loginExitoso = false
+            error = "Datos incorrectos"
+        }
     }
 }

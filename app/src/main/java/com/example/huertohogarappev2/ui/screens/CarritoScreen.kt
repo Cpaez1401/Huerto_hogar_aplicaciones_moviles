@@ -1,7 +1,9 @@
 package com.example.huertohogarappev2.ui.screen
 
+import android.app.Application
 import androidx.compose.ui.text.font.FontWeight
 import com.example.huertohogarappev2.ui.components.CardProducto
+import com.example.huertohogarappev2.ui.theme.HuertoHogarAppEv2Theme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -12,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -19,6 +22,7 @@ import com.example.huertohogarappev2.ui.components.BotonPrincipal
 import com.example.huertohogarappev2.ui.components.TituloText
 import com.example.huertohogarappev2.viewmodel.CarritoViewModel
 import com.example.huertohogarappev2.viewmodel.ProductoViewModel
+
 
 @Composable
 fun CarritoScreen(
@@ -94,9 +98,7 @@ fun CarritoScreen(
 
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun CarritoScreenPreview() {
-    val nav = rememberNavController()
-    CarritoScreen(navController = nav)
-}
+
+
+
+

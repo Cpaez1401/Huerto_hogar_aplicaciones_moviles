@@ -8,12 +8,12 @@ import com.example.huertohogarappev2.model.Carrito
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class CarritoViewModel(application: Application) : AndroidViewModel(application) {
+open class CarritoViewModel(application: Application) : AndroidViewModel(application) {
 
     private val db = HuertoHogarDatabase.getDatabase(application)
     private val carritoDao = db.carritoDao()
 
-    private val _carrito = MutableStateFlow<List<Carrito>>(emptyList())
+    val _carrito = MutableStateFlow<List<Carrito>>(emptyList())
     val carrito = _carrito
 
     private val usuarioId = 1 // temporal

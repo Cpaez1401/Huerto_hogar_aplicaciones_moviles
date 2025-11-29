@@ -89,13 +89,13 @@ fun LoginScreen(
 
             CampoTexto(
                 valor = viewModel.correo,
-                onValueChange = { viewModel.actualizarCorreo(it)},
+                onValueChange = { viewModel.actualizarCorreo(it) },
                 label = "Correo"
             )
 
             CampoTexto(
                 valor = viewModel.contrasena,
-                onValueChange = { viewModel.actualizarContrasena(it)},
+                onValueChange = { viewModel.actualizarContrasena(it) },
                 label = "Contraseña",
                 isPassword = true
             )
@@ -105,7 +105,8 @@ fun LoginScreen(
             BotonPrincipal(
                 texto = "Ingresar",
                 color = Color(0xFF2F5D08),
-                onClick = { viewModel.validarLogin()
+                onClick = {
+                    viewModel.validarLogin()
                     if (viewModel.loginExitoso) {
                         onLogin()
                     } else {
@@ -114,10 +115,15 @@ fun LoginScreen(
                 }
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
+            if (viewModel.error.isNotBlank()) {
+                Spacer(Modifier.height(8.dp))
+                Text(text = viewModel.error, color = Color.Red)
 
-            TextButton(onClick = onGoToRegister) {
-                Text("Crear cuenta")
+                Spacer(modifier = Modifier.height(12.dp))
+
+                TextButton(onClick = onGoToRegister) {
+                    Text("Crear cuenta")
+                }
             }
         }
     }
