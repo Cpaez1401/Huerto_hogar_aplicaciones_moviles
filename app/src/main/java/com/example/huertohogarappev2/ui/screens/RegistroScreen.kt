@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.huertohogarappev2.R
 import com.example.huertohogarappev2.ui.components.BotonPrincipal
-import com.example.huertohogarappev2.ui.components.BottomBar
 import com.example.huertohogarappev2.ui.components.CampoTexto
 import com.example.huertohogarappev2.ui.components.TituloText
 
@@ -126,10 +125,9 @@ fun RegistroScreen(
             TextButton(onClick = onIrLogin) {
                 Text("¿Ya tienes cuenta? Inicia sesión")
 
-
             }
-        }
 
+        }
     }
 }
 
