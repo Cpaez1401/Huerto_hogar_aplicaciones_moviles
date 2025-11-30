@@ -32,20 +32,24 @@ import androidx.navigation.NavController
 import com.example.huertohogarappev2.R
 import com.example.huertohogarappev2.model.Producto
 import com.example.huertohogarappev2.ui.components.BotonPrincipal
+import com.example.huertohogarappev2.ui.components.CardProducto
 import com.example.huertohogarappev2.ui.components.TituloText
 import com.example.huertohogarappev2.viewmodel.CarritoViewModel
 import com.example.huertohogarappev2.viewmodel.ProductoViewModel
 
 @Composable
-fun HomeScreen(navController: NavController, carritoViewModel: CarritoViewModel = viewModel()) {
+fun HomeScreen(
+    navController: NavController,
+    carritoViewModel: CarritoViewModel = viewModel()) {
 
-    val viewModel: ProductoViewModel = viewModel()
-    val productos by viewModel.productos.collectAsState()
-    val carritoVm: CarritoViewModel = viewModel()
+    val productoViewModel: ProductoViewModel = viewModel()
+    val productos by productoViewModel.productos.collectAsState()
+
+
 
 
     LaunchedEffect(Unit) {
-        viewModel.cargarProductos()
+        productoViewModel.cargarProductos()
     }
 
     Column(
@@ -73,6 +77,12 @@ fun HomeScreen(navController: NavController, carritoViewModel: CarritoViewModel 
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        TituloText(
+            texto = "Productos Destacados"
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         // Lista de productos
         LazyColumn {
             items(productos) { producto ->
@@ -82,15 +92,13 @@ fun HomeScreen(navController: NavController, carritoViewModel: CarritoViewModel 
 
         LazyColumn {
             items(productos) { producto ->
-                BotonPrincipal(
-                    texto = "Agregar ${producto.nombre}",
-                    color = Color(0xFF4CAF50),
-                    onClick = {
 
-                        carritoViewModel.agregarProducto(producto)
-                    }
+                CardProducto(
+                    producto = producto,
+                    onAgregar = { carritoViewModel.agregarAlCarrito(productoId = producto.id) }
                 )
-                Spacer(modifier = Modifier.height(10.dp))
+
+                Spacer(modifier = Modifier.height(12.dp))
             }
         }
     }

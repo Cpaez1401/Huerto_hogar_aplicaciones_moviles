@@ -77,8 +77,7 @@ fun AppNavigation() {
 
                 composable("home") {
                     HomeScreen(
-                        navController = navController,
-                        productoViewModel = productoViewModel
+                        navController = navController
                     )
                 }
 
