@@ -7,14 +7,13 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import androidx.room.OnConflictStrategy
 import com.example.huertohogarappev2.model.Carrito
 import com.example.huertohogarappev2.model.CarritoConProducto
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CarritoDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun insertar(carrito: Carrito)
 
     @Update
@@ -38,6 +37,10 @@ interface CarritoDao {
     @Query("DELETE FROM carrito WHERE usuarioId = :usuarioId AND productoId = :productoId")
     suspend fun eliminarDelCarrito(usuarioId: Int, productoId: Int)
 
+    /**
+     * Nueva función para obtener los ítems del carrito con la información completa del producto.
+     * Usa @Transaction y devuelve un Flow para reactividad.
+     */
     @Transaction
     @Query("SELECT * FROM carrito WHERE usuarioId = :usuarioId")
     fun obtenerCarritoConProductos(usuarioId: Int): Flow<List<CarritoConProducto>>

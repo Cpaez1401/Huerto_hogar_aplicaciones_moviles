@@ -1,4 +1,3 @@
-// /app/src/main/java/com/example/huertohogarappev2/ui/screens/PerfilScreen.kt
 package com.example.huertohogarappev2.ui.screens
 
 import androidx.compose.foundation.layout.*
@@ -15,7 +14,7 @@ import androidx.navigation.NavController
 import com.example.huertohogarappev2.ui.components.TituloText
 import com.example.huertohogarappev2.viewmodel.PerfilViewModel
 
-// Nota: Este es un ejemplo básico. Necesitarás un UsuarioViewModel para cargar los datos reales.
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

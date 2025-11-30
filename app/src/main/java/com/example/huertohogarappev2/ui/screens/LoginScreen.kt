@@ -1,4 +1,4 @@
-package com.example.huertohogarappev2.ui.screen
+package com.example.huertohogarappev2.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -69,7 +69,7 @@ fun LoginScreen(
             contentDescription = "Banner Mercado Online",
             modifier = Modifier
                 .fillMaxWidth()
-                .height(160.dp) // más pequeño para compactar
+                .height(160.dp)
                 .clip(RoundedCornerShape(16.dp)),
             contentScale = ContentScale.Crop
         )

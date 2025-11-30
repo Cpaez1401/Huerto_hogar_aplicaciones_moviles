@@ -1,4 +1,4 @@
-package com.example.huertohogarappev2.ui.screen
+package com.example.huertohogarappev2.ui.screens
 
 
 import androidx.compose.foundation.Image

@@ -21,9 +21,9 @@ import com.example.huertohogarappev2.model.Producto
 @Composable
 fun CardProducto(
     producto: Producto,
-    cantidad: Int? = null,     // opcional → solo carrito
-    onAgregar: (() -> Unit)? = null,  // opcional → solo home
-    onEliminar: (() -> Unit)? = null  // opcional → solo carrito
+    cantidad: Int? = null,
+    onAgregar: (() -> Unit)? = null,
+    onEliminar: (() -> Unit)? = null
 ) {
     val context = LocalContext.current
     val imagenProducto = obtenerImagen(context, producto.imagen)
@@ -75,7 +75,7 @@ fun CardProducto(
             Spacer(modifier = Modifier.height(12.dp))
 
 
-            // 👉 Mostrar cantidad solo si existe (modo carrito)
+
             if (cantidad != null) {
                 Text(
                     text = "Cantidad: $cantidad",
@@ -84,7 +84,7 @@ fun CardProducto(
                 )
             }
 
-            // 👉 Botón de agregar (solo para home)
+
             if (onAgregar != null) {
                 BotonPrincipal(
                     texto = "Agregar al carrito",
@@ -93,7 +93,7 @@ fun CardProducto(
                 )
             }
 
-            // 👉 Botón de eliminar (solo para carrito)
+
             if (onEliminar != null) {
                 BotonPrincipal(
                     texto = "Eliminar producto",

@@ -12,9 +12,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.huertohogarappev2.data.HuertoHogarDatabase
 import com.example.huertohogarappev2.ui.components.BottomBar
-import com.example.huertohogarappev2.ui.screen.CarritoScreen
-import com.example.huertohogarappev2.ui.screen.LoginScreen
-import com.example.huertohogarappev2.ui.screen.RegistroScreen
+import com.example.huertohogarappev2.ui.screens.CarritoScreen
+import com.example.huertohogarappev2.ui.screens.LoginScreen
+import com.example.huertohogarappev2.ui.screens.RegistroScreen
 import com.example.huertohogarappev2.ui.screens.HomeScreen
 import com.example.huertohogarappev2.ui.screens.PerfilScreen
 import com.example.huertohogarappev2.ui.screens.ProductosScreen
