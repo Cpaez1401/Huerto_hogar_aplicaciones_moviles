@@ -1,6 +1,7 @@
 package com.example.huertohogarappev2.data
 
 import android.content.Context
+import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -13,6 +14,7 @@ import com.example.huertohogarappev2.model.Usuario
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.jvm.java
 
 @Database(
     entities = [
@@ -22,9 +24,10 @@ import kotlinx.coroutines.launch
         DetallePedido::class,
         Carrito::class
     ],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
-    abstract class HuertoHogarDatabase : RoomDatabase() {
+abstract class HuertoHogarDatabase : RoomDatabase() {
     abstract fun usuarioDao(): UsuarioDao
     abstract fun productoDao(): ProductoDao
     abstract fun pedidoDao(): PedidoDao
@@ -32,43 +35,51 @@ import kotlinx.coroutines.launch
     abstract fun carritoDao(): CarritoDao
 
     companion object {
+        @Volatile
         private var database: HuertoHogarDatabase? = null
 
         fun getDatabase(context: Context): HuertoHogarDatabase {
-            if (database == null) {
-                database = Room.databaseBuilder(
-                    context,
-                    HuertoHogarDatabase::class.java,
-                    "huertohogar.db"
-                ).addCallback(object : Callback() {
+            return database ?: synchronized(this) {
+
+                val callback = object : RoomDatabase.Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
                         CoroutineScope(Dispatchers.IO).launch {
-                            insertarDatosPorDefecto(database!!)
+                            database?.let { insertarDatosPorDefecto(it) }
                         }
                     }
-                })
-                    .setJournalMode(JournalMode.TRUNCATE)
+                }
+
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    HuertoHogarDatabase::class.java,
+                    "huerto_hogar_db"
+                )
+                    .addCallback(callback)
+                    .fallbackToDestructiveMigration()
                     .build()
+
+                database = instance
+                instance
             }
-            return database!!
+
         }
 
-        private suspend fun insertarDatosPorDefecto(db: HuertoHogarDatabase) {
+        suspend fun insertarDatosPorDefecto(db: HuertoHogarDatabase) {
             val usuarioDao = db.usuarioDao()
 
             val usuarios = listOf(
                 Usuario(
-                    nombre = "Juan Pérez", 
-                    correo = "juan@huertohogar.cl", 
+                    nombre = "Juan Pérez",
+                    correo = "juan@huertohogar.cl",
                     contrasena = "1234",
                     direccion = "Av. Siempre Viva 123, Santiago",
                     telefono = "+569 1234 5678",
                     activo = true
                 ),
                 Usuario(
-                    nombre = "María García", 
-                    correo = "maria@huertohogar.cl", 
+                    nombre = "María García",
+                    correo = "maria@huertohogar.cl",
                     contrasena = "1234",
                     direccion = "Calle Falsa 456, Viña del Mar",
                     telefono = "+569 8765 4321",
@@ -97,7 +108,7 @@ import kotlinx.coroutines.launch
                     precio = 1000,
                     imagen = "naranjas_valencia.webp",
                     stock = 200,
-                    categoria = "Frutas Frescas", 
+                    categoria = "Frutas Frescas",
                     unidad = "kilo",
                     activo = true
                 ),
@@ -112,7 +123,7 @@ import kotlinx.coroutines.launch
                     activo = true
                 ),
                 Producto(
-                    nombre = "Miel Orgánica", 
+                    nombre = "Miel Orgánica",
                     descripcion = "Miel pura de apicultores locales",
                     precio = 5000,
                     imagen = "miel.jpg",
@@ -137,3 +148,4 @@ import kotlinx.coroutines.launch
         }
     }
 }
+
