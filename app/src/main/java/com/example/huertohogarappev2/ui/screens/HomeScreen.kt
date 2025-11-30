@@ -31,16 +31,25 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.huertohogarappev2.R
 import com.example.huertohogarappev2.model.Producto
+import com.example.huertohogarappev2.ui.components.BotonPrincipal
+import com.example.huertohogarappev2.ui.components.CardProducto
 import com.example.huertohogarappev2.ui.components.TituloText
+import com.example.huertohogarappev2.viewmodel.CarritoViewModel
 import com.example.huertohogarappev2.viewmodel.ProductoViewModel
 
 @Composable
-fun HomeScreen(navController: NavController) {
-    val viewModel: ProductoViewModel = viewModel()
-    val productos by viewModel.productos.collectAsState()
+fun HomeScreen(
+    navController: NavController,
+    carritoViewModel: CarritoViewModel = viewModel()) {
+
+    val productoViewModel: ProductoViewModel = viewModel()
+    val productos by productoViewModel.productos.collectAsState()
+
+
+
 
     LaunchedEffect(Unit) {
-        viewModel.cargarProductos()
+        productoViewModel.cargarProductos()
     }
 
     Column(
@@ -68,10 +77,28 @@ fun HomeScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        TituloText(
+            texto = "Productos Destacados"
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         // Lista de productos
         LazyColumn {
             items(productos) { producto ->
                 ProductoItem(producto = producto, navController = navController)
+            }
+        }
+
+        LazyColumn {
+            items(productos) { producto ->
+
+                CardProducto(
+                    producto = producto,
+                    onAgregar = { carritoViewModel.agregarAlCarrito(productoId = producto.id) }
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
             }
         }
     }

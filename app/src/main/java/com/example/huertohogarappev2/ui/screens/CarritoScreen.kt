@@ -15,13 +15,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.huertohogarappev2.viewmodel.CarritoViewModel
+import com.example.huertohogarappev2.viewmodel.ProductoViewModel
+
 
 @Composable
 fun CarritoScreen(
     navController: NavHostController,
-    carritoViewModel: CarritoViewModel
+    carritoViewModel: CarritoViewModel,
+    productoViewModel: ProductoViewModel
 ) {
-    val productos = carritoViewModel.carrito.collectAsState()
+    val carrito = carritoViewModel.carrito.collectAsState()
+    val productos = productoViewModel.productos.collectAsState()
 
     Column(
         modifier = Modifier
@@ -37,32 +41,42 @@ fun CarritoScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        if (productos.value.isEmpty()) {
+        if (carrito.value.isEmpty()) {
             Text("Tu carrito está vacío")
         } else {
             LazyColumn {
-                items(productos.value) { producto ->
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 6.dp)
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(12.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text(text = producto.nombre, fontWeight = FontWeight.Bold)
-                                Text(text = "$${producto.precio}")
-                            }
+                items(carrito.value) { item ->
 
-                            IconButton(onClick = {
-                                carritoViewModel.eliminarProducto(producto)
-                            }) {
-                                Icon(
-                                    imageVector = Icons.Default.Delete,
-                                    contentDescription = "Eliminar"
-                                )
+
+                    val producto = productos.value.find { it.id == item.productoId }
+
+                    if (producto != null) {
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 6.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(12.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = producto.nombre,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                    Text(text = "$${producto.precio}")
+                                }
+
+                                IconButton(onClick = {
+                                    carritoViewModel.eliminarDelCarrito(producto.id)
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Default.Delete,
+                                        contentDescription = "Eliminar"
+                                    )
+                                }
                             }
                         }
                     }
@@ -72,7 +86,7 @@ fun CarritoScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
-                onClick = { carritoViewModel.vaciarCarrito() },
+                onClick = { carritoViewModel.limpiarCarrito() },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(Color(0xFF4CAF50))
             ) {

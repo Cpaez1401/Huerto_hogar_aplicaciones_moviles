@@ -71,7 +71,7 @@ fun ProductosScreen(
 
                 CardProducto(
                     producto = producto,
-                    onAgregar = { carritoViewModel.agregarProducto(producto) }
+                    onAgregar = { carritoViewModel.agregarAlCarrito(productoId = producto.id) }
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))

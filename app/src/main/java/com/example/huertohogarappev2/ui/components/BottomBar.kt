@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Store
+import androidx.compose.material.icons.outlined.Store
 import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
@@ -35,7 +36,7 @@ fun BottomBar(navController: NavController) {
         NavigationBarItem(
             selected = currentRoute == "productos",
             onClick = { navController.navigate("productos") },
-            icon = { Icon(Icons.Default.Store, "Productos") },
+            icon = { Icon(Icons.Filled.Store, contentDescription = "Productos") },
             label = { Text("Productos") }
         )
 
