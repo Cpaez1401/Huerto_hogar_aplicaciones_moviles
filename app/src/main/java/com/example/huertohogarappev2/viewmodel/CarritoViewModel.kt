@@ -2,21 +2,24 @@ package com.example.huertohogarappev2.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
+import com.example.huertohogarappev2.data.CarritoDao
 import com.example.huertohogarappev2.data.HuertoHogarDatabase
 import com.example.huertohogarappev2.model.Carrito
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-open class CarritoViewModel(application: Application) : AndroidViewModel(application) {
+class CarritoViewModel(
+    private val carritoDao: CarritoDao
+) : ViewModel() {
 
-    private val db = HuertoHogarDatabase.getDatabase(application)
-    private val carritoDao = db.carritoDao()
+    private val _carrito = MutableStateFlow<List<Carrito>>(emptyList())
+    val carrito = _carrito.asStateFlow()
 
-    val _carrito = MutableStateFlow<List<Carrito>>(emptyList())
-    val carrito = _carrito
-
-    private val usuarioId = 1 // temporal
+    private val usuarioId = 1 // Temporal hasta que Login entregue el usuario real
 
     init {
         cargarCarrito()
@@ -31,16 +34,12 @@ open class CarritoViewModel(application: Application) : AndroidViewModel(applica
     fun agregarAlCarrito(productoId: Int) {
         viewModelScope.launch {
 
-            val existente = carritoDao.obtenerItemCarrito(usuarioId, productoId)
+            val itemExistente = carritoDao.obtenerItemCarrito(usuarioId, productoId)
 
-            if (existente != null) {
-                // Incrementar cantidad
-                val actualizado = existente.copy(
-                    cantidad = existente.cantidad + 1
-                )
+            if (itemExistente != null) {
+                val actualizado = itemExistente.copy(cantidad = itemExistente.cantidad + 1)
                 carritoDao.actualizar(actualizado)
             } else {
-                // Insertar nuevo item
                 carritoDao.insertar(
                     Carrito(
                         usuarioId = usuarioId,
@@ -68,4 +67,3 @@ open class CarritoViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 }
-
