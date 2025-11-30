@@ -28,14 +28,16 @@ import com.example.huertohogarappev2.R
 import com.example.huertohogarappev2.ui.components.BotonPrincipal
 import com.example.huertohogarappev2.ui.components.CampoTexto
 import com.example.huertohogarappev2.ui.components.TituloText
+import com.example.huertohogarappev2.viewmodel.RegistroViewModel
 
 /*@Preview(showBackground = true, showSystemUi = true)*/
 @Composable
 fun RegistroScreen(
-    onRegistrar: () -> Unit = {},
-    onIrLogin: () -> Unit = {},
-    viewModel: Any
-) {
+    viewModel: RegistroViewModel,
+    onRegistrar: () -> Unit,
+    onIrLogin: () -> Unit
+)
+{
     var nombre by remember { mutableStateOf("") }
     var correo by remember { mutableStateOf("") }
     var contrasena by remember { mutableStateOf("") }

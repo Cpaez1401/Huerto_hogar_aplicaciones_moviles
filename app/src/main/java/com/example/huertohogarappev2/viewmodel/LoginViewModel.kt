@@ -23,6 +23,10 @@ class LoginViewModel(private val usuarioDao: UsuarioDao) : ViewModel() {
     var error by mutableStateOf("")
         private set
 
+    var usuarioActualId by mutableStateOf<Int?>(null)
+        private set
+
+
     fun actualizarCorreo(nuevo: String) {
         correo = nuevo
     }
@@ -46,9 +50,11 @@ class LoginViewModel(private val usuarioDao: UsuarioDao) : ViewModel() {
                 loginExitoso = false
                 error = "Datos incorrectos"
             }
+
+            }
         }
     }
-}
+
 
 
 

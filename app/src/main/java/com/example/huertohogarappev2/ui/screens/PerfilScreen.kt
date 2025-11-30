@@ -13,13 +13,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.huertohogarappev2.ui.components.TituloText
+import com.example.huertohogarappev2.viewmodel.PerfilViewModel
 
 // Nota: Este es un ejemplo básico. Necesitarás un UsuarioViewModel para cargar los datos reales.
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PerfilScreen(
-    navController: NavController
+    navController: NavController,
+    usuarioId: Int?,
+    viewModel: PerfilViewModel
     // usuarioViewModel: UsuarioViewModel = viewModel()
 ) {
     // Simulación de datos de usuario

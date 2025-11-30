@@ -1,7 +1,6 @@
 package com.example.huertohogarappev2.data
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -45,7 +44,8 @@ abstract class HuertoHogarDatabase : RoomDatabase() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
                         CoroutineScope(Dispatchers.IO).launch {
-                            database?.let { insertarDatosPorDefecto(it) }
+                            val instancia = getDatabase(context)
+                            insertarDatosPorDefecto(instancia)
                         }
                     }
                 }
