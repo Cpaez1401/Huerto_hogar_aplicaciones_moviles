@@ -1,20 +1,42 @@
 package com.example.huertohogarappev2.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.huertohogarappev2.data.ProductoDao
 import com.example.huertohogarappev2.model.Producto
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
-class ProductoViewModel(productoDao: ProductoDao) : ViewModel() {
+class ProductoViewModel(private val productoDao: ProductoDao) : ViewModel() {
 
     private val _productos = MutableStateFlow<List<Producto>>(emptyList())
-    val productos = _productos
+    val productos: StateFlow<List<Producto>> = _productos
 
     init {
         cargarProductos()
     }
 
     fun cargarProductos() {
+        viewModelScope.launch {
+            try {
+
+                val productosDB = productoDao.obtenerTodos()
+
+                if (productosDB.isNotEmpty()) {
+                    _productos.value = productosDB
+                } else {
+
+                    cargarProductosEjemplo()
+                }
+            } catch (e: Exception) {
+
+                cargarProductosEjemplo()
+            }
+        }
+    }
+
+    private fun cargarProductosEjemplo() {
         val productos = listOf(
             Producto(
                 nombre = "Manzanas Fuji",
@@ -60,7 +82,7 @@ class ProductoViewModel(productoDao: ProductoDao) : ViewModel() {
                 nombre = "Espinacas Frescas",
                 descripcion = "Espinacas frescas y nutritivas",
                 precio = 700,
-                imagen = "espinacas_organicas.jpg",
+                imagen = "espinacas_frescas.jpg",
                 stock = 80,
                 categoria = "Verduras Orgánicas",
                 unidad = "bolsa",

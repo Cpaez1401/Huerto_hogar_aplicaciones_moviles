@@ -63,6 +63,10 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        CarruselSimple()
+        
+        Spacer(modifier = Modifier.height(16.dp))
+
         LazyColumn {
             items(productos) { producto ->
 

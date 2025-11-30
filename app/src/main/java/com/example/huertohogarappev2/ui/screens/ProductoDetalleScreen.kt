@@ -29,11 +29,11 @@ import com.example.huertohogarappev2.viewmodel.CarritoViewModel
 @Composable
 fun ProductosScreen(
     navController: NavController,
-    viewModel: ProductoViewModel = viewModel(),
-    carritoViewModel: CarritoViewModel = viewModel()
+    productoViewModel: ProductoViewModel, // [MODIFICADA]
+    carritoViewModel: CarritoViewModel? = null
 ) {
 
-    val productos = viewModel.productos.collectAsState().value
+    val productos = productoViewModel.productos.collectAsState().value
 
     Column(
         modifier = Modifier
@@ -70,7 +70,8 @@ fun ProductosScreen(
 
                 CardProducto(
                     producto = producto,
-                    onAgregar = { carritoViewModel.agregarAlCarrito(productoId = producto.id) },
+                    onAgregar = {
+                        carritoViewModel?.agregarAlCarrito(productoId = producto.id) },
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -83,26 +84,5 @@ fun ProductosScreen(
 }
 
 
-
-@Preview(
-    showBackground = true,
-    showSystemUi = true,
-    name = "ProductosScreen Preview"
-)
-@Composable
-fun ProductosScreenPreview() {
-
-
-    val navController = rememberNavController()
-
-
-    val viewModel: ProductoViewModel = viewModel()
-
-    ProductosScreen(
-        navController = navController,
-        viewModel = viewModel,
-        carritoViewModel = viewModel()
-    )
-}
 
 

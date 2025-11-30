@@ -125,7 +125,7 @@ import kotlinx.coroutines.launch
                     nombre = "Espinacas Frescas",
                     descripcion = "Espinacas frescas y nutritivas",
                     precio = 700,
-                    imagen = "espinacas_organicas.jpg",
+                    imagen = "espinacas_frescas.jpg",
                     stock = 80,
                     categoria = "Verduras Orgánicas",
                     unidad = "bolsa",
