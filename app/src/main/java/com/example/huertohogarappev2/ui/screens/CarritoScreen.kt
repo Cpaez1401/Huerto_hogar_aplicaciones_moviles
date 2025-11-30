@@ -1,37 +1,33 @@
+// /app/src/main/java/com/example/huertohogarappev2/ui/screens/CarritoScreen.kt
 package com.example.huertohogarappev2.ui.screen
 
-import android.app.Application
-import androidx.compose.ui.text.font.FontWeight
-import com.example.huertohogarappev2.ui.components.CardProducto
-import com.example.huertohogarappev2.ui.theme.HuertoHogarAppEv2Theme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.huertohogarappev2.ui.components.BotonPrincipal
+import com.example.huertohogarappev2.ui.components.CardProducto
 import com.example.huertohogarappev2.ui.components.TituloText
 import com.example.huertohogarappev2.viewmodel.CarritoViewModel
-import com.example.huertohogarappev2.viewmodel.ProductoViewModel
-
+// Se elimina la importación de ProductoViewModel
 
 @Composable
 fun CarritoScreen(
     navController: NavController,
     carritoViewModel: CarritoViewModel = viewModel(),
-    productoViewModel: ProductoViewModel = viewModel()
+    // Se elimina el parámetro productoViewModel
 ) {
-    val carrito = carritoViewModel.carrito.collectAsState().value
-    val productos = productoViewModel.productos.collectAsState().value
+    // Se usa el nuevo StateFlow con los datos combinados
+    val carritoItems = carritoViewModel.carritoConProductos.collectAsState().value
 
     Column(
         modifier = Modifier
@@ -44,7 +40,7 @@ fun CarritoScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        if (carrito.isEmpty()) {
+        if (carritoItems.isEmpty()) {
             Text(
                 text = "Tu carrito está vacío 😢",
                 fontSize = 18.sp
@@ -56,26 +52,22 @@ fun CarritoScreen(
         LazyColumn(
             modifier = Modifier.weight(1f)
         ) {
-            items(carrito) { item ->
+            items(carritoItems) { item -> // item es CarritoConProducto
 
-                val producto = productos.find { it.id == item.productoId }
-
-                if (producto != null) {
-                    CardProducto(
-                        producto = producto,
-                        cantidad = item.cantidad,
-                        onEliminar = { carritoViewModel.eliminarDelCarrito(item.productoId) }
-                    )
-                }
+                CardProducto(
+                    producto = item.producto,
+                    cantidad = item.carrito.cantidad,
+                    onEliminar = { carritoViewModel.eliminarDelCarrito(item.producto.id) }
+                )
             }
         }
 
         Spacer(Modifier.height(16.dp))
 
         // TOTAL
-        val total = carrito.sumOf { item ->
-            val p = productos.find { it.id == item.productoId }
-            if (p != null) p.precio * item.cantidad else 0
+        // Cálculo simplificado gracias a CarritoConProducto
+        val total = carritoItems.sumOf { item ->
+            item.producto.precio * item.carrito.cantidad
         }
 
         Text(
@@ -97,8 +89,3 @@ fun CarritoScreen(
     }
 
 }
-
-
-
-
-

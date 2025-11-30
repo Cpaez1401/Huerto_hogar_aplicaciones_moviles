@@ -1,5 +1,6 @@
 package com.example.huertohogarappev2
 
+import AppNavigation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,12 +17,14 @@ import com.example.huertohogarappev2.ui.theme.HuertoHogarAppEv2Theme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            //AppNavigation()
+            HuertoHogarAppEv2Theme {
+                AppNavigation()
+            }
         }
     }
 }
+
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {

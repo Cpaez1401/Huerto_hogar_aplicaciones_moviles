@@ -1,35 +1,36 @@
+// /app/src/main/java/com/example/huertohogarappev2/viewmodel/CarritoViewModel.kt
 package com.example.huertohogarappev2.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
 import com.example.huertohogarappev2.data.CarritoDao
-import com.example.huertohogarappev2.data.HuertoHogarDatabase
 import com.example.huertohogarappev2.model.Carrito
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.example.huertohogarappev2.model.CarritoConProducto
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+
 
 class CarritoViewModel(
     private val carritoDao: CarritoDao
 ) : ViewModel() {
 
-    private val _carrito = MutableStateFlow<List<Carrito>>(emptyList())
-    val carrito = _carrito.asStateFlow()
-
     private val usuarioId = 1 // Temporal hasta que Login entregue el usuario real
 
-    init {
-        cargarCarrito()
-    }
+    /**
+     * StateFlow que expone la lista de CarritoConProducto,
+     * obtenida de forma reactiva desde el DAO.
+     */
+    val carritoConProductos: StateFlow<List<CarritoConProducto>> =
+        carritoDao.obtenerCarritoConProductos(usuarioId)
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = emptyList()
+            )
 
-    fun cargarCarrito() {
-        viewModelScope.launch {
-            _carrito.value = carritoDao.obtenerPorUsuario(usuarioId)
-        }
-    }
+    // La función cargarCarrito() ya no es necesaria.
 
     fun agregarAlCarrito(productoId: Int) {
         viewModelScope.launch {
@@ -49,21 +50,29 @@ class CarritoViewModel(
                 )
             }
 
-            cargarCarrito()
         }
     }
+
+    fun obtenerCantidad(productoId: Int): Int {
+        return carritoConProductos.value
+            .firstOrNull { it.producto.id == productoId }
+            ?.carrito?.cantidad ?: 0
+    }
+
 
     fun eliminarDelCarrito(productoId: Int) {
         viewModelScope.launch {
             carritoDao.eliminarDelCarrito(usuarioId, productoId)
-            cargarCarrito()
+            // No es necesario llamar a cargarCarrito()
         }
     }
 
     fun limpiarCarrito() {
         viewModelScope.launch {
             carritoDao.limpiarCarrito(usuarioId)
-            cargarCarrito()
+            // No es necesario llamar a cargarCarrito()
         }
     }
 }
+
+
