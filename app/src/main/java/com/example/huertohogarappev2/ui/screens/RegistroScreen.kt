@@ -1,6 +1,7 @@
 package com.example.huertohogarappev2.ui.screens
 
 
+import android.R.attr.onClick
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -117,9 +118,22 @@ fun RegistroScreen(
 
             BotonPrincipal(
                 texto = "Registrarse",
-                onClick = { onRegistrar() },
-                color = Color(0xFF4CAF50)
+                onClick = {
+                    viewModel.registrar(
+                        nombre = nombre,
+                        correo = correo,
+                        contrasena = contrasena,
+                        direccion = "SIN DIRECCION",
+                        telefono = "0000"
+                    )
+
+                    if (viewModel.registroExitoso) {
+                        onRegistrar()
+                    }
+                }
             )
+
+
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -131,6 +145,7 @@ fun RegistroScreen(
         }
     }
 }
+
 
 
 

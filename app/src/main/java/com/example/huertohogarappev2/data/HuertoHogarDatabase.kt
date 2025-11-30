@@ -56,7 +56,6 @@ abstract class HuertoHogarDatabase : RoomDatabase() {
                     "huerto_hogar_db"
                 )
                     .addCallback(callback)
-                    .fallbackToDestructiveMigration()
                     .build()
 
                 database = instance
