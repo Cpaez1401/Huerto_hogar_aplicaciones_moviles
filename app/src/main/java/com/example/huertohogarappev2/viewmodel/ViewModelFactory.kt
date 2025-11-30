@@ -24,6 +24,10 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(ProductoViewModel::class.java) ->
                 ProductoViewModel(database.productoDao()) as T
 
+            modelClass.isAssignableFrom(PerfilViewModel::class.java) ->
+                PerfilViewModel(database.usuarioDao()) as T
+
+
             else -> throw IllegalArgumentException("ViewModel desconocido: ${modelClass.name}")
         }
     }
