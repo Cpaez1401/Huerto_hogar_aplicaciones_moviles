@@ -1,25 +1,36 @@
 package com.example.huertohogarappev2.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.huertohogarappev2.data.HuertoHogarDatabase
+import com.example.huertohogarappev2.data.UsuarioDao
 import com.example.huertohogarappev2.model.Usuario
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-open class RegistroViewModel(application: Application) : AndroidViewModel(application) {
+class RegistroViewModel(
+    private val usuarioDao: UsuarioDao
+) : ViewModel() {
 
-    private val usuarioDao = HuertoHogarDatabase.getDatabase(application).usuarioDao()
+    // Estados que la pantalla observa
+    var registroExitoso by mutableStateOf(false)
+        private set
 
+    var mensajeError by mutableStateOf<String?>(null)
+        private set
 
-    private val _registroExitoso = MutableStateFlow(false)
-    val registroExitoso = _registroExitoso.asStateFlow()
+    // LIMPIAR ERROR
+    fun limpiarError() {
+        mensajeError = null
+    }
 
-    private val _mensajeError = MutableStateFlow<String?>(null)
-    val mensajeError = _mensajeError.asStateFlow()
+    // MOSTRAR ERROR
+    fun mostrarError(msg: String) {
+        mensajeError = msg
+    }
 
+    // REGISTRAR USUARIO
     fun registrar(
         nombre: String,
         correo: String,
@@ -29,14 +40,14 @@ open class RegistroViewModel(application: Application) : AndroidViewModel(applic
     ) {
         viewModelScope.launch {
 
-            // 1. Validar si el correo ya existe
-            val existente = usuarioDao.obtenerPorCorreo(correo)
-            if (existente != null) {
-                _mensajeError.value = "El correo ya está registrado"
+            // Validar si el correo existe
+            val existe = usuarioDao.obtenerPorCorreo(correo)
+            if (existe != null) {
+                mensajeError = "El correo ya está registrado"
                 return@launch
             }
 
-            // 2. Crear usuario
+            // Crear usuario nuevo
             val usuario = Usuario(
                 nombre = nombre,
                 correo = correo,
@@ -48,17 +59,8 @@ open class RegistroViewModel(application: Application) : AndroidViewModel(applic
 
             usuarioDao.insertar(usuario)
 
-            _mensajeError.value = null
-            _registroExitoso.value = true
+            mensajeError = null
+            registroExitoso = true
         }
     }
-
-    fun limpiarError() {
-        _mensajeError.value = null
-    }
-
-    fun mostrarError(msg: String) {
-        _mensajeError.value = msg
-    }
-
 }

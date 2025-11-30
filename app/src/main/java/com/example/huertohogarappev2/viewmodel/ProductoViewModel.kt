@@ -1,10 +1,11 @@
 package com.example.huertohogarappev2.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.example.huertohogarappev2.data.ProductoDao
 import com.example.huertohogarappev2.model.Producto
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ProductoViewModel : ViewModel() {
+class ProductoViewModel(productoDao: ProductoDao) : ViewModel() {
 
     private val _productos = MutableStateFlow<List<Producto>>(emptyList())
     val productos = _productos
