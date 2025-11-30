@@ -1,7 +1,5 @@
 package com.example.huertohogarappev2.ui.screens
 
-import android.R.attr.fontWeight
-import android.R.attr.text
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -29,75 +27,52 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.huertohogarappev2.R
 import com.example.huertohogarappev2.model.Producto
-import com.example.huertohogarappev2.ui.components.BotonPrincipal
 import com.example.huertohogarappev2.ui.components.CardProducto
+import com.example.huertohogarappev2.ui.components.CarruselSimple
 import com.example.huertohogarappev2.ui.components.TituloText
+import com.example.huertohogarappev2.ui.theme.HuertoHogarAppEv2Theme
 import com.example.huertohogarappev2.viewmodel.CarritoViewModel
 import com.example.huertohogarappev2.viewmodel.ProductoViewModel
 
 @Composable
 fun HomeScreen(
-    navController: NavController,
-    carritoViewModel: CarritoViewModel = viewModel()) {
-
-    val productoViewModel: ProductoViewModel = viewModel()
-    val productos by productoViewModel.productos.collectAsState()
-
-
-
-
-    LaunchedEffect(Unit) {
-        productoViewModel.cargarProductos()
-    }
+    navController: NavHostController,
+    productoViewModel: ProductoViewModel,
+    carritoViewModel: CarritoViewModel? = null  // opcional
+) {
+    val productos = productoViewModel.productos.collectAsState().value
 
     Column(
         modifier = Modifier
             .padding(24.dp)
             .fillMaxSize()
     ) {
-        TituloText(
-            texto = "Bienvenido a Huerto Hogar"
-        )
 
+        TituloText("Bienvenido a Huerto Hogar")
 
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "Productos frescos disponibles",
+            text = "Productos destacados",
             fontSize = 18.sp,
             color = Color.Gray
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Carrusel
-        com.example.huertohogarappev2.ui.components.CarruselSimple()
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        TituloText(
-            texto = "Productos Destacados"
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Lista de productos
-        LazyColumn {
-            items(productos) { producto ->
-                ProductoItem(producto = producto, navController = navController)
-            }
-        }
-
         LazyColumn {
             items(productos) { producto ->
 
+                // Card simplificada sólo para mostrar producto
                 CardProducto(
                     producto = producto,
-                    onAgregar = { carritoViewModel.agregarAlCarrito(productoId = producto.id) }
+                    onAgregar = {
+                        carritoViewModel?.agregarAlCarrito(producto.id)
+                    }
                 )
-
                 Spacer(modifier = Modifier.height(12.dp))
             }
         }
@@ -160,7 +135,7 @@ private fun obtenerImagen(context: Context, imagen: String?): Int {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomeScreenPreview() {
-    com.example.huertohogarappev2.ui.theme.HuertoHogarAppEv2Theme {
+    HuertoHogarAppEv2Theme {
 
         val productosEjemplo = listOf(
             Producto(
@@ -221,7 +196,7 @@ fun HomeScreenPreview() {
             Spacer(modifier = Modifier.height(16.dp))
 
             // Carrusel
-            com.example.huertohogarappev2.ui.components.CarruselSimple()
+            CarruselSimple()
 
             Spacer(modifier = Modifier.height(16.dp))
 

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -19,11 +18,12 @@ import androidx.compose.ui.unit.sp
 import com.example.huertohogarappev2.R
 import com.example.huertohogarappev2.model.Producto
 
-
 @Composable
 fun CardProducto(
     producto: Producto,
-    onAgregar: (() -> Unit)? = null
+    cantidad: Int? = null,     // opcional → solo carrito
+    onAgregar: (() -> Unit)? = null,  // opcional → solo home
+    onEliminar: (() -> Unit)? = null  // opcional → solo carrito
 ) {
     val context = LocalContext.current
     val imagenProducto = obtenerImagen(context, producto.imagen)
@@ -35,11 +35,11 @@ fun CardProducto(
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
+
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
 
-            // Imagen del producto
             Image(
                 painter = painterResource(id = imagenProducto),
                 contentDescription = producto.nombre,
@@ -52,14 +52,12 @@ fun CardProducto(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Nombre
             Text(
                 text = producto.nombre,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
 
-            // Precio
             Text(
                 text = "${producto.precio} CLP",
                 fontSize = 18.sp,
@@ -67,7 +65,6 @@ fun CardProducto(
                 color = Color(0xFF4CAF50)
             )
 
-            // Descripción corta
             Text(
                 text = producto.descripcion,
                 fontSize = 14.sp,
@@ -77,7 +74,17 @@ fun CardProducto(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Botón solo si onAgregar != null
+
+            // 👉 Mostrar cantidad solo si existe (modo carrito)
+            if (cantidad != null) {
+                Text(
+                    text = "Cantidad: $cantidad",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+
+            // 👉 Botón de agregar (solo para home)
             if (onAgregar != null) {
                 BotonPrincipal(
                     texto = "Agregar al carrito",
@@ -85,11 +92,18 @@ fun CardProducto(
                     onClick = onAgregar
                 )
             }
+
+            // 👉 Botón de eliminar (solo para carrito)
+            if (onEliminar != null) {
+                BotonPrincipal(
+                    texto = "Eliminar producto",
+                    color = Color.Red,
+                    onClick = onEliminar
+                )
+            }
         }
     }
 }
-
-
 
 
 private fun obtenerImagen(context: Context, imagen: String?): Int {

@@ -2,10 +2,11 @@ package com.example.huertohogarappev2.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.huertohogarappev2.data.HuertoHogarDatabase
 import com.example.huertohogarappev2.data.database.AppDatabase
 
 class ViewModelFactory(
-    private val database: AppDatabase
+    private val database: HuertoHogarDatabase
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")

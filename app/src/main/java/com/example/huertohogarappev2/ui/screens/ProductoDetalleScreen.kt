@@ -20,7 +20,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.huertohogarappev2.R
-import com.example.huertohogarappev2.ui.components.BotonPrincipal
 import com.example.huertohogarappev2.ui.components.CardProducto
 import com.example.huertohogarappev2.ui.components.TituloText
 import com.example.huertohogarappev2.viewmodel.ProductoViewModel
@@ -71,7 +70,7 @@ fun ProductosScreen(
 
                 CardProducto(
                     producto = producto,
-                    onAgregar = { carritoViewModel.agregarAlCarrito(productoId = producto.id) }
+                    onAgregar = { carritoViewModel.agregarAlCarrito(productoId = producto.id) },
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
