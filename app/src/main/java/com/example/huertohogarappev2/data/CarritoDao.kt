@@ -1,4 +1,3 @@
-// /app/src/main/java/com/example/huertohogarappev2/data/CarritoDao.kt
 package com.example.huertohogarappev2.data
 
 import androidx.room.Dao
@@ -37,10 +36,7 @@ interface CarritoDao {
     @Query("DELETE FROM carrito WHERE usuarioId = :usuarioId AND productoId = :productoId")
     suspend fun eliminarDelCarrito(usuarioId: Int, productoId: Int)
 
-    /**
-     * Nueva función para obtener los ítems del carrito con la información completa del producto.
-     * Usa @Transaction y devuelve un Flow para reactividad.
-     */
+
     @Transaction
     @Query("SELECT * FROM carrito WHERE usuarioId = :usuarioId")
     fun obtenerCarritoConProductos(usuarioId: Int): Flow<List<CarritoConProducto>>

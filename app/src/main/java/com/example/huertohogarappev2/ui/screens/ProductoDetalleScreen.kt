@@ -29,7 +29,7 @@ import com.example.huertohogarappev2.viewmodel.CarritoViewModel
 @Composable
 fun ProductosScreen(
     navController: NavController,
-    productoViewModel: ProductoViewModel, // [MODIFICADA]
+    productoViewModel: ProductoViewModel,
     carritoViewModel: CarritoViewModel? = null
 ) {
 
