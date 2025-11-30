@@ -89,7 +89,9 @@ fun AppNavigation() {
 
                 composable("productos") {
                     ProductosScreen(
-                        navController, productoViewModel
+                        navController = navController,
+                        productoViewModel = productoViewModel,
+                        carritoViewModel = carritoViewModel
                     )
                 }
 
