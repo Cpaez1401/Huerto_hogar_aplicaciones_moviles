@@ -9,5 +9,5 @@ data class CarritoConProducto(
         parentColumn = "productoId",
         entityColumn = "id"
     )
-    val producto: Producto
+    val producto: Producto?
 )

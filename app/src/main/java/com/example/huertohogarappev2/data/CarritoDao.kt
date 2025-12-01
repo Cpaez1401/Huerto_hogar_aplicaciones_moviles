@@ -25,8 +25,10 @@ interface CarritoDao {
     @Query("SELECT * FROM carrito")
     suspend fun obtenerTodos(): List<Carrito>
 
+    @Transaction
     @Query("SELECT * FROM carrito WHERE usuarioId = :usuarioId")
-    suspend fun obtenerPorUsuario(usuarioId: Int): List<Carrito>
+    fun obtenerCarritoConProductos(usuarioId: Int): Flow<List<CarritoConProducto>>
+
 
     @Query("SELECT * FROM carrito WHERE usuarioId = :usuarioId AND productoId = :productoId")
     suspend fun obtenerItemCarrito(usuarioId: Int, productoId: Int): Carrito?
@@ -41,8 +43,6 @@ interface CarritoDao {
      * Nueva función para obtener los ítems del carrito con la información completa del producto.
      * Usa @Transaction y devuelve un Flow para reactividad.
      */
-    @Transaction
-    @Query("SELECT * FROM carrito WHERE usuarioId = :usuarioId")
-    fun obtenerCarritoConProductos(usuarioId: Int): Flow<List<CarritoConProducto>>
+
 
 }

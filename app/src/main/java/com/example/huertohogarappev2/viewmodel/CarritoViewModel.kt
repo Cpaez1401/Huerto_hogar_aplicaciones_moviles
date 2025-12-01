@@ -51,7 +51,7 @@ class CarritoViewModel(
 
     fun obtenerCantidad(productoId: Int): Int {
         return carritoConProductos.value
-            .firstOrNull { it.producto.id == productoId }
+            .firstOrNull { it.producto?.id == productoId }   // ← proteges el acceso
             ?.carrito?.cantidad ?: 0
     }
 

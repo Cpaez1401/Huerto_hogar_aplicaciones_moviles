@@ -53,10 +53,12 @@ fun CarritoScreen(
         ) {
             items(carritoItems) { item ->
 
+                val producto = item.producto ?: return@items  // Evita crash si es null
+
                 CardProducto(
-                    producto = item.producto,
+                    producto = producto,
                     cantidad = item.carrito.cantidad,
-                    onEliminar = { carritoViewModel.eliminarDelCarrito(item.producto.id) }
+                    onEliminar = { carritoViewModel.eliminarDelCarrito(producto.id) }
                 )
             }
         }
@@ -65,7 +67,7 @@ fun CarritoScreen(
 
         // TOTAL
         val total = carritoItems.sumOf { item ->
-            item.producto.precio * item.carrito.cantidad
+            item.producto?.precio?.times(item.carrito.cantidad) ?: 0
         }
 
         Text(
