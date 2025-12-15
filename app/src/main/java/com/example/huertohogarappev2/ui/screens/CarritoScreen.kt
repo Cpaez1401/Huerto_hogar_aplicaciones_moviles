@@ -1,5 +1,4 @@
-// /app/src/main/java/com/example/huertohogarappev2/ui/screens/CarritoScreen.kt
-package com.example.huertohogarappev2.ui.screen
+package com.example.huertohogarappev2.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,15 +17,15 @@ import com.example.huertohogarappev2.ui.components.BotonPrincipal
 import com.example.huertohogarappev2.ui.components.CardProducto
 import com.example.huertohogarappev2.ui.components.TituloText
 import com.example.huertohogarappev2.viewmodel.CarritoViewModel
-// Se elimina la importación de ProductoViewModel
+
 
 @Composable
 fun CarritoScreen(
     navController: NavController,
-    carritoViewModel: CarritoViewModel = viewModel(),
-    // Se elimina el parámetro productoViewModel
+    carritoViewModel: CarritoViewModel
+
 ) {
-    // Se usa el nuevo StateFlow con los datos combinados
+
     val carritoItems = carritoViewModel.carritoConProductos.collectAsState().value
 
     Column(
@@ -52,12 +51,14 @@ fun CarritoScreen(
         LazyColumn(
             modifier = Modifier.weight(1f)
         ) {
-            items(carritoItems) { item -> // item es CarritoConProducto
+            items(carritoItems) { item ->
+
+                val producto = item.producto ?: return@items  // Evita crash si es null
 
                 CardProducto(
-                    producto = item.producto,
+                    producto = producto,
                     cantidad = item.carrito.cantidad,
-                    onEliminar = { carritoViewModel.eliminarDelCarrito(item.producto.id) }
+                    onEliminar = { carritoViewModel.eliminarDelCarrito(producto.id) }
                 )
             }
         }
@@ -65,9 +66,8 @@ fun CarritoScreen(
         Spacer(Modifier.height(16.dp))
 
         // TOTAL
-        // Cálculo simplificado gracias a CarritoConProducto
         val total = carritoItems.sumOf { item ->
-            item.producto.precio * item.carrito.cantidad
+            item.producto?.precio?.times(item.carrito.cantidad) ?: 0
         }
 
         Text(

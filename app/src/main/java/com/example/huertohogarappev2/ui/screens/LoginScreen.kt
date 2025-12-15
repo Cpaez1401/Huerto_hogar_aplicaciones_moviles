@@ -1,4 +1,4 @@
-package com.example.huertohogarappev2.ui.screen
+package com.example.huertohogarappev2.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,6 +43,13 @@ fun LoginScreen(
     onLogin: () -> Unit = {},
     onGoToRegister: () -> Unit = {}
 ) {
+
+    LaunchedEffect(viewModel.loginExitoso) {
+        if (viewModel.loginExitoso) {
+            onLogin()
+        }
+    }
+
     var correo by remember { mutableStateOf("") }
     var contrasena by remember { mutableStateOf("") }
 
@@ -69,7 +77,7 @@ fun LoginScreen(
             contentDescription = "Banner Mercado Online",
             modifier = Modifier
                 .fillMaxWidth()
-                .height(160.dp) // más pequeño para compactar
+                .height(160.dp)
                 .clip(RoundedCornerShape(16.dp)),
             contentScale = ContentScale.Crop
         )

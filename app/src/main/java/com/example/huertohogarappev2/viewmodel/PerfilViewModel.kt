@@ -1,30 +1,22 @@
 package com.example.huertohogarappev2.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.huertohogarappev2.data.UsuarioDao
 import com.example.huertohogarappev2.model.Usuario
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class PerfilViewModel(
-    private val usuarioDao: UsuarioDao
-) : ViewModel() {
+class PerfilViewModel(private val usuarioDao: UsuarioDao) : ViewModel() {
 
-    private val _usuario = MutableStateFlow<Usuario?>(null)
-    val usuario: StateFlow<Usuario?> = _usuario
+    var usuario by mutableStateOf<Usuario?>(null)
+        private set
 
-    // Temporal, hasta que Login lo entregue
-    private val usuarioId = 1
-
-    init {
-        cargarUsuario()
-    }
-
-    fun cargarUsuario() {
+    fun cargarUsuario(id: Int) {
         viewModelScope.launch {
-            _usuario.value = usuarioDao.obtenerPorId(usuarioId)
+            usuario = usuarioDao.obtenerPorId(id)
         }
     }
 
@@ -34,7 +26,7 @@ class PerfilViewModel(
         telefono: String
     ) {
         viewModelScope.launch {
-            val current = _usuario.value ?: return@launch
+            val current = usuario ?: return@launch
 
             val actualizado = current.copy(
                 nombre = nombre,
@@ -43,7 +35,7 @@ class PerfilViewModel(
             )
 
             usuarioDao.actualizar(actualizado)
-            _usuario.value = actualizado
+            usuario = actualizado
         }
     }
 }

@@ -41,7 +41,7 @@ import com.example.huertohogarappev2.viewmodel.ProductoViewModel
 fun HomeScreen(
     navController: NavHostController,
     productoViewModel: ProductoViewModel,
-    carritoViewModel: CarritoViewModel? = null  // opcional
+    carritoViewModel: CarritoViewModel? = null
 ) {
     val productos = productoViewModel.productos.collectAsState().value
 
@@ -135,7 +135,7 @@ private fun obtenerImagen(context: Context, imagen: String?): Int {
 }
 
 
-// PREVIEW CON DATOS DE EJEMPLO
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomeScreenPreview() {
@@ -214,7 +214,7 @@ fun HomeScreenPreview() {
     }
 }
 
-// Versión simplificada para el Preview
+
 @Composable
 fun ProductoItemPreviewContent(producto: Producto) {
     val context = LocalContext.current

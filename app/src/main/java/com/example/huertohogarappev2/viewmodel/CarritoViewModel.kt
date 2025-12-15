@@ -1,4 +1,3 @@
-// /app/src/main/java/com/example/huertohogarappev2/viewmodel/CarritoViewModel.kt
 package com.example.huertohogarappev2.viewmodel
 
 import androidx.lifecycle.ViewModel
@@ -18,10 +17,7 @@ class CarritoViewModel(
 
     private val usuarioId = 1 // Temporal hasta que Login entregue el usuario real
 
-    /**
-     * StateFlow que expone la lista de CarritoConProducto,
-     * obtenida de forma reactiva desde el DAO.
-     */
+
     val carritoConProductos: StateFlow<List<CarritoConProducto>> =
         carritoDao.obtenerCarritoConProductos(usuarioId)
             .stateIn(
@@ -30,7 +26,7 @@ class CarritoViewModel(
                 initialValue = emptyList()
             )
 
-    // La función cargarCarrito() ya no es necesaria.
+
 
     fun agregarAlCarrito(productoId: Int) {
         viewModelScope.launch {
@@ -55,7 +51,7 @@ class CarritoViewModel(
 
     fun obtenerCantidad(productoId: Int): Int {
         return carritoConProductos.value
-            .firstOrNull { it.producto.id == productoId }
+            .firstOrNull { it.producto?.id == productoId }   // ← proteges el acceso
             ?.carrito?.cantidad ?: 0
     }
 

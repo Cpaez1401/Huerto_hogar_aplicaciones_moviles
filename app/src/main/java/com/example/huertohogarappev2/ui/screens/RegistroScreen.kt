@@ -1,6 +1,7 @@
-package com.example.huertohogarappev2.ui.screen
+package com.example.huertohogarappev2.ui.screens
 
 
+import android.R.attr.onClick
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -28,14 +29,16 @@ import com.example.huertohogarappev2.R
 import com.example.huertohogarappev2.ui.components.BotonPrincipal
 import com.example.huertohogarappev2.ui.components.CampoTexto
 import com.example.huertohogarappev2.ui.components.TituloText
+import com.example.huertohogarappev2.viewmodel.RegistroViewModel
 
 /*@Preview(showBackground = true, showSystemUi = true)*/
 @Composable
 fun RegistroScreen(
-    onRegistrar: () -> Unit = {},
-    onIrLogin: () -> Unit = {},
-    viewModel: Any
-) {
+    viewModel: RegistroViewModel,
+    onRegistrar: () -> Unit,
+    onIrLogin: () -> Unit
+)
+{
     var nombre by remember { mutableStateOf("") }
     var correo by remember { mutableStateOf("") }
     var contrasena by remember { mutableStateOf("") }
@@ -115,9 +118,22 @@ fun RegistroScreen(
 
             BotonPrincipal(
                 texto = "Registrarse",
-                onClick = { onRegistrar() },
-                color = Color(0xFF4CAF50)
+                onClick = {
+                    viewModel.registrar(
+                        nombre = nombre,
+                        correo = correo,
+                        contrasena = contrasena,
+                        direccion = "SIN DIRECCION",
+                        telefono = "0000"
+                    )
+
+                    if (viewModel.registroExitoso) {
+                        onRegistrar()
+                    }
+                }
             )
+
+
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -129,6 +145,7 @@ fun RegistroScreen(
         }
     }
 }
+
 
 
 

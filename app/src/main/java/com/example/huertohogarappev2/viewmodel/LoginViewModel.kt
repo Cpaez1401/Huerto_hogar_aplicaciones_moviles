@@ -6,7 +6,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.huertohogarappev2.data.UsuarioDao
+import com.example.huertohogarappev2.model.Usuario
 import kotlinx.coroutines.launch
+
+
 
 
 class LoginViewModel(private val usuarioDao: UsuarioDao) : ViewModel() {
@@ -23,6 +26,13 @@ class LoginViewModel(private val usuarioDao: UsuarioDao) : ViewModel() {
     var error by mutableStateOf("")
         private set
 
+    var usuarioActual by mutableStateOf<Usuario?>(null)
+        private set
+
+    var usuarioActualId by mutableStateOf<Int?>(null)
+        private set
+
+
     fun actualizarCorreo(nuevo: String) {
         correo = nuevo
     }
@@ -33,22 +43,24 @@ class LoginViewModel(private val usuarioDao: UsuarioDao) : ViewModel() {
 
     fun validarLogin() {
         viewModelScope.launch {
-            if (correo == "test@huerto.cl" && contrasena == "1234") {
-                loginExitoso = true
-                return@launch
-            }
 
-            val usuario = usuarioDao.obtenerPorCorreo(correo)
-            if (usuario != null && usuario.contrasena == contrasena) {
+            // Buscar usuario por correo
+            val user = usuarioDao.obtenerPorCorreo(correo)
+
+            if (user != null && user.contrasena == contrasena) {
+                usuarioActual = user
+                usuarioActualId = user.id
                 loginExitoso = true
                 error = ""
             } else {
+                usuarioActual = null
                 loginExitoso = false
                 error = "Datos incorrectos"
             }
         }
     }
 }
+
 
 
 
