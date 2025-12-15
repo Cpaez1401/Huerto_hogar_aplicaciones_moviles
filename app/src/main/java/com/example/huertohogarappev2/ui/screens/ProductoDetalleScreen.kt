@@ -30,7 +30,7 @@ import com.example.huertohogarappev2.viewmodel.CarritoViewModel
 fun ProductosScreen(
     navController: NavController,
     productoViewModel: ProductoViewModel,
-    carritoViewModel: CarritoViewModel? = null
+    carritoViewModel: CarritoViewModel
 ) {
 
     val productos = productoViewModel.productos.collectAsState().value
@@ -71,7 +71,7 @@ fun ProductosScreen(
                 CardProducto(
                     producto = producto,
                     onAgregar = {
-                        carritoViewModel?.agregarAlCarrito(productoId = producto.id) },
+                        carritoViewModel.agregarAlCarrito(productoId = producto.id) },
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))

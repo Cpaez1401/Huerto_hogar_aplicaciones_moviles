@@ -22,7 +22,7 @@ import com.example.huertohogarappev2.viewmodel.CarritoViewModel
 @Composable
 fun CarritoScreen(
     navController: NavController,
-    carritoViewModel: CarritoViewModel = viewModel(),
+    carritoViewModel: CarritoViewModel
 
 ) {
 

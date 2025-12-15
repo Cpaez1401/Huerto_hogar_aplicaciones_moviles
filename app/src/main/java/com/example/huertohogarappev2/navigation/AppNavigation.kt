@@ -98,7 +98,7 @@ fun AppNavigation() {
 
                 composable("carrito") {
                     CarritoScreen(
-                        navController, carritoViewModel
+                        navController, carritoViewModel,
                     )
                 }
 
